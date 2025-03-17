@@ -41,5 +41,21 @@ export const deleteClient = async (clientId) => {
     RETURNING *;
     `;
   const { rows } = await query(queryStr, [clientId]);
+  return !!rows;
+};
+
+export const getSearchClient = async (q) => {
+  const queryStr = `
+    SELECT
+        *
+    FROM
+        client_db
+    WHERE
+        name ILIKE $1 or email ILIKE $1 or job ILIKE $1
+        ;
+    `;
+
+  const { rows } = await query(queryStr, [`%${q}%`]);
+  console.log(rows);
   return rows;
 };

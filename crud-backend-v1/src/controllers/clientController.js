@@ -9,6 +9,17 @@ export const getClients = async (req, res) => {
   }
 };
 
+export const getSearchClients = async (req, res) => {
+  const { q } = req.query;
+  try {
+    const clients = await clientServices.getSearchClient(q);
+    res.status(200).json(clients);
+  } catch (err) {
+    console.error(err);
+    res.status(404).json({ message: "Search client not found" });
+  }
+};
+
 export const createClient = async (req, res) => {
   try {
     const clientData = req.body;
