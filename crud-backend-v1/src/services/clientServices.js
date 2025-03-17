@@ -31,6 +31,15 @@ export const updateClient = async (clientData, clientId) => {
     isActive,
     clientId,
   ]);
-  console.log(rows);
+  return rows;
+};
+
+export const deleteClient = async (clientId) => {
+  const queryStr = `
+    Delete From client_db
+    WHERE id = $1
+    RETURNING *;
+    `;
+  const { rows } = await query(queryStr, [clientId]);
   return rows;
 };
